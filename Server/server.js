@@ -64,16 +64,23 @@ app.put('/products/:product/', function (req, res) {
   var url = req.body.url;
   var alt = req.body.alt;
 
-  var updates = {};
-  for (var key in req.body) {
-    updates.key = req.body.key;
-  }
-
-  Image.updateOne({product: productParam}, updates, function(err, result) {
-    if (err) {
-      throw err;
+  Image.find({product: productParam}, function(err, result) {
+    if (result) {
+      Image.updateOne({product: productParam}, req.body, function(err, result) {
+        if (err) {
+          throw err;
+        } else {
+          res.send(result);
+        }
+      });
     } else {
-      res.send('Got a PUT request at /products/:product/')
+      Image.create({product, imageName, color, url, alt}, function(err, result) {
+        if (err) {
+        throw err;
+        } else {
+          res.send(result);
+        }
+      })
     }
   });
 })
@@ -85,7 +92,7 @@ app.delete('/products/:product/', function (req, res) {
     if (err) {
       throw err;
     } else {
-      res.send('Got a DELETE request at /products/:product/')
+      res.send('Got a DELETE request at /products/:product/');
     }
   });
 })
