@@ -40,6 +40,9 @@ app.get('/products/:product/', function(req, res) {
 
 
 ////////////////////////////////////////////////////
+//new addition
+
+//post request: creates a new data
 app.post('/products/', function(req, res) {
   var product = req.body.product;
   var imageName = req.body.imageName;
@@ -56,6 +59,7 @@ app.post('/products/', function(req, res) {
   })
 });
 
+//put request: updates existing, or creates a new data if the data doesn't exist yet
 app.put('/products/:product/', function (req, res) {
   var productParam = req.params.product;
   var product = req.body.product;
@@ -64,20 +68,28 @@ app.put('/products/:product/', function (req, res) {
   var url = req.body.url;
   var alt = req.body.alt;
 
-  var updates = {};
-  for (var key in req.body) {
-    updates.key = req.body.key;
-  }
-
-  Image.updateOne({product: productParam}, updates, function(err, result) {
-    if (err) {
-      throw err;
+  Image.find({product: productParam}, function(err, result) {
+    if (result) {
+      Image.updateOne({product: productParam}, req.body, function(err, result) {
+        if (err) {
+          throw err;
+        } else {
+          res.send(result);
+        }
+      });
     } else {
-      res.send('Got a PUT request at /products/:product/')
+      Image.create({product, imageName, color, url, alt}, function(err, result) {
+        if (err) {
+        throw err;
+        } else {
+          res.send(result);
+        }
+      })
     }
   });
 })
 
+//delete request: deletes a  data
 app.delete('/products/:product/', function (req, res) {
   var productParam = req.params.product;
 
@@ -85,7 +97,7 @@ app.delete('/products/:product/', function (req, res) {
     if (err) {
       throw err;
     } else {
-      res.send('Got a DELETE request at /products/:product/')
+      res.send('Got a DELETE request at /products/:product/');
     }
   });
 })
