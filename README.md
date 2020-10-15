@@ -22,5 +22,10 @@ In order to get setup run the following scripts:
 
 Testing Script: npm test
 
-Have Fun!
+## Updates with CRUD:
+1. GET '/products' return all the pictures
+2. GET '/products/:product/' retuns pictures of a product specified by :product.
+3. POST '/products/' creates a picture to be added into the database
+4. PUT '/products/:product/' edits specified product, or creates a new data if such product does not exists.
+5. DELETE '/products/:product/'deletes pictures of a product specified in :product.
 
