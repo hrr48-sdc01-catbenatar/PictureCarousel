@@ -40,6 +40,9 @@ app.get('/products/:product/', function(req, res) {
 
 
 ////////////////////////////////////////////////////
+//new addition
+
+//post request: creates a new data
 app.post('/products/', function(req, res) {
   var product = req.body.product;
   var imageName = req.body.imageName;
@@ -56,6 +59,7 @@ app.post('/products/', function(req, res) {
   })
 });
 
+//put request: updates existing, or creates a new data if the data doesn't exist yet
 app.put('/products/:product/', function (req, res) {
   var productParam = req.params.product;
   var product = req.body.product;
@@ -85,6 +89,7 @@ app.put('/products/:product/', function (req, res) {
   });
 })
 
+//delete request: deletes a  data
 app.delete('/products/:product/', function (req, res) {
   var productParam = req.params.product;
 
