@@ -64,5 +64,5 @@ const fs = require('fs');
 
   console.log('FINISHED!!');
   console.timeEnd('timer');
-})(10000000, 30000);
+})(100, 30000);
 
