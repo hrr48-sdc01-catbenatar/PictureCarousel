@@ -12,25 +12,25 @@ const fs = require('fs');
   let data = '';
 
   for (let j = 0; j < pictureLength; j++) {
-    pictures.push(`https://loremflickr.com/320/240/${keyword}`);
+    pictures.push(`"https://loremflickr.com/320/240/${keyword}"`);
   }
 
   for (var i = 0; i < number; i++ ) {
-    let record = `{
-      product: ${i},
-      imageName: ${faker.commerce.productDescription()},
-      color: ${faker.commerce.color().split(' ').join('-')},
-      url:  ${pictures},
-      alt: ${faker.image.abstract()}
-    },`;
-
+    let record = {
+      product: i,
+      imageName: faker.commerce.productDescription(),
+      color: faker.commerce.color().split(' ').join('-'),
+      url: pictures,
+      alt: faker.image.abstract()
+    };
+    record = JSON.stringify(record) + ',';
     //edge cases of starting and ending values
     if (i === 0) {
       record = '[' + record;
     }
     if (i === number -1) {
       let len = record.length;
-      record = record.slice(0, len) + ']';
+      record = record.slice(0, len - 1) + ']';
     }
 
     data += record;
@@ -38,8 +38,8 @@ const fs = require('fs');
 
     if (counter % batch === 0) {
       try {
-        fs.appendFileSync('./DB/primaries.csv', data);
-        console.log('adding: ', i);
+        fs.appendFileSync('./DB/primaries.txt', data);
+        // console.log('adding: ', i);
       } catch (err) {
         console.log('error', i);
         throw err;
@@ -52,8 +52,8 @@ const fs = require('fs');
 
   if (counter !== 0) {
     try {
-      fs.appendFileSync('./DB/primaries.csv', data);
-      console.log('adding last batch: ');
+      fs.appendFileSync('./DB/primaries.txt', data);
+      // console.log('adding last batch: ');
     } catch (err) {
       console.log('error last batch', i);
       throw err;
@@ -64,13 +64,5 @@ const fs = require('fs');
 
   console.log('FINISHED!!');
   console.timeEnd('timer');
-})(100000000, 30000);
-
-
-// let csvContent = "data:text/csv;charset=utf-8,";
-
-// primaries.forEach(function(primary) {
-//     let element = primary.join(",");
-//     csvContent += element + "\r\n";
-// });
+})(100, 30000);
 
