@@ -73,7 +73,7 @@ class ImageCarousel extends React.Component {
     var productID;
     if(window.location.pathname.slice(1) === '') {
       productID = 0;
-    } else if (window.location.pathname.slice() >= 100) {
+    } else if (window.location.pathname.slice(1) >= 100) {
       productID = 0;
     } else {
       productID = window.location.pathname.slice(1);

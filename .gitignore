@@ -3,3 +3,5 @@ bundle.js
 .DS_Store
 environment.js
 primaries.csv
+newrelic.js
+newrelic_agent.log
