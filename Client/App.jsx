@@ -3,6 +3,7 @@ import MainImage from './mainImage.jsx'
 import SideBar from './SideBar.jsx';
 import PopOut from './PopOut.jsx';
 import styles from './App.module.css';
+import axios from 'axios';
 
 class ImageCarousel extends React.Component {
   constructor(props) {
@@ -68,16 +69,33 @@ class ImageCarousel extends React.Component {
   }
 
   getImagesForEndpoint() {
+    console.log('inside endpoint');
     var productID;
     if(window.location.pathname.slice(1) === '') {
-      productID = 1;
-    } else if (window.location.pathname.slice(1) >= 101) {
-      productID = 1;
+      productID = 0;
+    } else if (window.location.pathname.slice() >= 100) {
+      productID = 0;
     } else {
       productID = window.location.pathname.slice(1);
     }
-    fetch(`/products/${productID}`)
-    .then(res => res.json())
+    axios.get(`/products/${productID}`)
+    .then(res => {
+      let images = [];
+      let category = res.data[0].category;
+      let url = res.data[0].url;
+      let alt = res.data[0].alt;
+      let count = res.data[0].picture_length;
+
+      for (var i = 0; i < 5; i++) {
+        let image = {};
+        image._id = i;
+        image.url = url + category + '?random=' + i;
+        image.alt = alt;
+        images.push(image);
+      }
+      console.log(images);
+      return images;
+    })
     .then((images) => {
       this.setState({
         imageList: images,
