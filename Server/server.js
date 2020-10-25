@@ -1,3 +1,5 @@
+require('newrelic');
+
 const express = require('express');
 const app = express();
 // const Image = require('../DB/image.js')
