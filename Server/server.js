@@ -1,4 +1,5 @@
 require('newrelic');
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
@@ -118,11 +119,12 @@ const postByProduct = 'INSERT INTO sdc.product (product, image_name, color, url,
 
 app.get('/products/:product/', function(req, res) {
   let productParam = Number(req.params.product);
-  console.log('server');
   client.execute(getAllByProduct, [productParam], {hints : ['int']}, (err, result) => {
     if (err) {
+      console.log('error');
       res.status(404).send(err);
     } else {
+      console.log('no error');
       res.status(200).send(result.rows);
     }
   });
@@ -130,12 +132,7 @@ app.get('/products/:product/', function(req, res) {
 
 //post request: creates a new data
 app.post('/products/', function(req, res) {
-  let image_name = req.body.image_name;
-  let color = req.body.color;
-  let url = req.body.url;
-  let category = req.body.category;
-  let picture_length = req.body.picture_length;
-  let alt = req.body.alt;
+  let {image_name, color, url, category, picture_length, alt} = req.body
   let product;
   //get the last id
   client.execute(getLastProduct, [], {hints : ['int']}, (err, result) => {
