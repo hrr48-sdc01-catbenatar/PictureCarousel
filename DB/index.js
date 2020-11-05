@@ -16,13 +16,13 @@
 // module.exports = db;
 
 
-const info = require('./environment.js');
+
 const {Sequelize, DataTypes} = require('sequelize');
-const user = info.user;
-const password = info.password;
-const host = info.host;
-const port = info.port;
-const database = info.database;
+const user = process.env.pg_user;
+const password = process.env.pg_password;
+const host = process.env.pg_host;
+const port = process.env.pg_port;
+const database = process.env.pg_database;
 const fs = require('fs');
 
 // const data = require('./primaries.csv');
