@@ -116,7 +116,7 @@ sequelize.authenticate()
 // )
 //SEED
 
-// COPY products_by_id * FROM 'C:\Users\Taeksu Kim\Desktop\hackReactor\course\SDC\image_carousel\DB\primaries.csv' WITH DELIMITER = '|' AND HEADER=FALSE;
+// COPY sdc.product_by_id (product, image_name, color, url, category, picture_length, alt) FROM '/mnt/c/Users/Taeksu Kim/Desktop/primaries.csv' WITH DELIMITER = '|' AND HEADER=FALSE;
 
 // CREATE TABLE product_by_id (
 //   product INT,
